@@ -5,16 +5,14 @@ class ImageProcessor:
         self.image = image
 
     def apply_blur(self):
-        if self.image:
-            self.image = self.image.filter(ImageFilter.BLUR)
+        self.image = self.image.filter(ImageFilter.BLUR)
 
-    def add_text(self, text="Вариант 1", font_path='arial.ttf', font_size=20):
-        if self.image:
-            draw = ImageDraw.Draw(self.image)
-            font = ImageFont.truetype(font_path, font_size)
-            # Исправляем на использование textbbox
-            text_bbox = draw.textbbox((0, 0), text, font=font)
-            text_width = text_bbox[2] - text_bbox[0]
-            text_height = text_bbox[3] - text_bbox[1]
-            position = (self.image.width - text_width - 10, self.image.height - text_height - 10)
-            draw.text(position, text, font=font, fill='white')
+    def add_text(self, text, position, font_path="arial.ttf"):
+        draw = ImageDraw.Draw(self.image)
+        font = ImageFont.truetype(font_path, 20)
+        text_bbox = draw.textbbox((0, 0), text, font=font)
+        position = (self.image.width - text_bbox[2] - 10, self.image.height - text_bbox[3] - 10)
+        draw.text(position, text, (255, 255, 255), font=font)
+
+    def get_image(self):
+        return self.image
