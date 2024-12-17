@@ -1,19 +1,20 @@
 from PIL import Image
+import os
 
 class ImageHandler:
-    def __init__(self):
-        self.image = None
+    def __init__(self, filepath):
+        self.filepath = filepath
+        self.image = Image.open(filepath)
 
-    def load_image(self, file_path):
-        self.image = Image.open(file_path)
+    def resize_image(self, size=(300, 300)):
+        self.image = self.image.resize(size)
+
+    def set_image(self, image):
+        self.image = image
+
+    def save_image(self, save_path):
+        self.image.save(save_path)
+        print(f"Изображение сохранено как {save_path}")
 
     def get_image(self):
         return self.image
-
-    def resize(self, new_width=300, new_height=300):
-        if self.image:
-            self.image = self.image.resize((new_width, new_height), Image.Resampling.LANCZOS)
-
-    def save_image(self, path):
-        if self.image:
-            self.image.save(path, format='PNG')
